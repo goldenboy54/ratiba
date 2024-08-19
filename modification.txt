@@ -10,7 +10,10 @@
 8. Mininum periods for every tutor for any given venue should be two periods(90 minutes)
 9. in the  venue module there should be a menu to generate report of empty venjes at any given time
 10. form to  manually assign  a free venue to a tutor (no need of rerun of the algoritm for minor changes)
-11.filter timetable by level is not working troubleshoot it.
+11.filter timetable by level is not working troubleshoot it,and only one level(7-1) is found by the system
+12. and filter by program in the timetable search
+
+13. What does css and images folder doing in the root directory
 ############################ CORRECTED improvement ###############################
 6.table department must be added
 7. Subject must be assigned according to their needs i.e theory to lecture hall and practical to labl venues 
