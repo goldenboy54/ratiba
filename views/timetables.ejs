@@ -1,0 +1,173 @@
+<%- include('layout') %>
+<%- include('partials/nav') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timetables Management</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/css/styles.css">
+  <style>
+    .table-container {
+      overflow-x: auto; /* Ensures horizontal scrolling if table overflows */
+    }
+    .animated-graphic {
+      font-size: 3rem; /* Adjust as needed */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    
+    <!-- Add timetable Button -->
+    <a title="DON'T GENERATE WITHOUT CLEARING THE LAST TIMETAMLE" href="/timetables/form" class="btn btn-primary mb-3 btn-custom"><i class="fas fa-plus"></i> GENERATE</a>
+    <div class="animated-graphic" title="Timetable autogenerating systen">🕑</div> 
+    <!-- Delete Button -->
+    <a title="CLEAR FIRST THEN GENERATE" href="/timetables/delete/0.0001" class="btn btn-danger btn-sm fixed-size-btn" onclick="return confirm('Are you sure you want to delete this timetable?');">CLEAR ALL</a>
+    
+    <!-- Display timetables -->
+    <% if (locals.timetables) { %>
+      <h2 class="mb-4">TIMETABLE MASTER ONLY IS ALLOWED TO GENERATE</h2>
+      <p>1. There is a key to check collision of period therefore no collision in the generated timetable.</p>
+      <p>2. After generating, the timetable will be saved in a table called `extracted_timetables`.</p>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>DAY</th>
+            <th>TIME</th>
+            <th>SUBJECT</th>  
+            <th>COURSE</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% timetables.forEach(timetable => { %>
+            <tr>
+              <td><b><%= timetable.day %></b></td>
+              <td><b><%= timetable.start_time %> ➖ <%= timetable.end_time %></b></td>
+              <td>
+                <b>
+                SubjectCode: <%= timetable.subject_code %><br>
+                SubjectName: <%= timetable.subject_name %><br>
+                Venue: <%= timetable.venue_name %><br>
+                Location: <%= timetable.venue_location %><br>
+                Tutor: <%= timetable.tutor_name %><br>
+                Credit: <%= timetable.subject_credit %><br>
+                VenueType: <%= timetable.venue_type %><br>
+                Status: <%= timetable.venue_status %>
+                </b>
+              </td>
+              <td>
+                <b>
+                Program: <%= timetable.program_name %><br>
+                Level: <%= timetable.program_level %><br>
+                Department: <%= timetable.department_name %><br>
+                Duration: <%= timetable.year %>
+                </b>
+              </td>
+              <td>
+                <!-- Edit Button -->
+                <button title="Option to edit if there is any case" type="button" class="btn btn-warning btn-sm fixed-size-btn" data-toggle="modal" data-target="#updateModal<%= timetable.id %>">EDIT</button>
+              </td>
+            </tr>
+
+            <!-- Update Modal -->
+            <div class="modal fade" id="updateModal<%= timetable.id %>" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel<%= timetable.id %>" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel<%= timetable.id %>">Update Timetable</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/timetables/edit/<%= timetable.id %>" method="post">
+                      <div class="form-group">
+                        <label for="day">Day:</label>
+                        <input type="text" id="day" name="day" class="form-control" value="<%= timetable.day %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="start_time">Start Time:</label>
+                        <input type="text" id="start_time" name="start_time" class="form-control" value="<%= timetable.start_time %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="end_time">End Time:</label>
+                        <input type="text" id="end_time" name="end_time" class="form-control" value="<%= timetable.end_time %>">
+                      </div>
+                      <div class="form-group">
+                        <label for="subject_code">Subject Code:</label>
+                        <input type="text" id="subject_code" name="subject_code" class="form-control" value="<%= timetable.subject_code %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="subject_name">Subject Name:</label>
+                        <input type="text" id="subject_name" name="subject_name" class="form-control" value="<%= timetable.subject_name %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="subject_credit">Credit:</label>
+                        <input type="number" id="subject_credit" name="subject_credit" class="form-control" value="<%= timetable.subject_credit %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="venue_name">Venue Name:</label>
+                        <input type="text" id="venue_name" name="venue_name" class="form-control" value="<%= timetable.venue_name %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="tutor_name">Tutor Name:</label>
+                        <input type="text" id="tutor_name" name="tutor_name" class="form-control" value="<%= timetable.tutor_name %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="venue_location">Venue Location:</label>
+                        <input type="text" id="venue_location" name="venue_location" class="form-control" value="<%= timetable.venue_location %>">
+                      </div>
+                      <div class="form-group">
+                        <label for="venue_type">Venue Type:</label>
+                        <input type="text" id="venue_type" name="venue_type" class="form-control" value="<%= timetable.venue_type %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="program_name">Program Name:</label>
+                        <input type="text" id="program_name" name="program_name" class="form-control" value="<%= timetable.program_name %>">
+                      </div>
+                      <div class="form-group">
+                        <label for="program_level">Program Level:</label>
+                        <input type="text" id="program_level" name="program_level" class="form-control" value="<%= timetable.program_level %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="department_name">Department Name:</label>
+                        <input type="text" id="department_name" name="department_name" class="form-control" value="<%= timetable.department_name %>" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="year">Year:</label>
+                        <input type="text" id="year" name="year" class="form-control" value="<%= timetable.year %>" required>
+                      </div>
+                      <button type="submit" class="btn btn-success">Submit Changes</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <!-- Display Add timetable Form -->
+     
+      <form action="/timetables" method="post">
+        <div class="form-group">
+          <input type="text" id="generate" name="generate" class="form-control" value="generate" required hidden>
+        </div>
+        <button type="submit" class="btn btn-success" title="Don't generate without Cleaning of the first generated to escape timetable Overliding">GENERATE TIMETABLE</button>
+      </form>
+
+    <% } %>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<%- include('partials/footer') %>

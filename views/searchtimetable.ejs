@@ -1,0 +1,179 @@
+<%- include('layout') %>
+
+<%- include('partials/nav') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Timetables</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <style>
+    .table-container {
+      overflow-x: auto; /* Ensures horizontal scrolling if table overflows */
+    }
+    .animated-graphic {
+      font-size: 3rem; /* Adjust as needed */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="text-center mb-4">
+      <div class="animated-graphic" title="Timetable autogenerating system">🕑</div> 
+    </div> 
+
+    <!-- Search Form -->
+    <form method="get" action="/searchtimetable" class="mb-4">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="program">Program:</label>
+          <select id="program" name="program" class="form-control select2">
+            <option value="">Select Program</option>
+            <% programs.forEach(program => { %>
+              <option value="<%= program.program_name %>" <%= program_name === program.program_name ? 'selected' : '' %>><%= program.program_name %></option>
+            <% }); %>
+          </select>
+        </div>
+        
+        <div class="form-group col-md-4">
+          <label for="level">Level:</label>
+          <select id="level" name="level" class="form-control select2">
+            <option value="">Select Level</option>
+            <% levels.forEach(level => { %>
+              <option value="<%= level.program_level %>" <%= program_level === level.program_level ? 'selected' : '' %>><%= level.program_level %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="venue">Venue:</label>
+          <select id="venue" name="venue" class="form-control select2">
+            <option value="">Select Venue</option>
+            <% venues.forEach(venue => { %>
+              <option value="<%= venue.venue_name %>" <%= venue_name === venue.venue_name ? 'selected' : '' %>><%= venue.venue_name %></option>
+            <% }); %>
+          </select>
+        </div>
+        
+        <div class="form-group col-md-4">
+          <label for="tutor">Tutor:</label>
+          <select id="tutor" name="tutor" class="form-control select2">
+            <option value="">Select Tutor</option>
+            <% tutors.forEach(tutor => { %>
+              <option value="<%= tutor.tutor_name %>" <%= tutor_name === tutor.tutor_name ? 'selected' : '' %>><%= tutor.tutor_name %></option>
+            <% }); %>
+          </select>
+        </div>
+        
+        <div class="form-group col-md-4">
+          <label for="department">Department:</label>
+          <select id="department" name="department" class="form-control select2">
+            <option value="">Select Department</option>
+            <% departments.forEach(department => { %>
+              <option value="<%= department.department_name %>" <%= department_name === department.department_name ? 'selected' : '' %>><%= department.department_name %></option>
+            <% }); %>
+          </select>
+        </div>
+    
+
+      <div class="form-group col-md-4">
+        <label for="subject">Subject:</label>
+        <select id="subject" name="subject" class="form-control select2">
+          <option value="">Select Subject</option>
+          <% subjects.forEach(subject => { %>
+            <option value="<%= subject.subject_name %>" <%= subject_name === subject.subject_name ? 'selected' : '' %>><%= subject.subject_name %></option>
+          <% }); %>
+        </select>
+      </div>
+    </div>
+    
+
+      <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <!-- Display Timetables -->
+    <% if (timetables.length > 0) { %>
+      <div class="table-container">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>DAY</th>
+              <th>TIME</th>
+              <th>SUBJECT</th>  
+              <th>COURSE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% timetables.forEach(timetable => { %>
+              <tr>
+                <td><b><%= timetable.day %></b></td>
+                <td><b><%= timetable.start_time %> ➖ <%= timetable.end_time %></b></td>
+                <td>
+                  <b>
+                    Subject Code: <%= timetable.subject_code %><br>
+                    Subject Name: <%= timetable.subject_name %><br>
+                    Venue: <%= timetable.venue_name %><br>
+                    Location: <%= timetable.venue_location %><br>
+                    Tutor: <%= timetable.tutor_name %><br> 
+                    Credit: <%= timetable.subject_credit %><br>
+                    Venue Type: <%= timetable.venue_type %><br>
+                    Status: <%= timetable.venue_status %>
+                  </b>
+                </td>
+                <td>
+                  <b>
+                    Program: <%= timetable.program_name %><br> 
+                    Level: <%= timetable.program_level %><br>
+                    Department: <%= timetable.department_name %><br>
+                    Duration: <%= timetable.year %>
+                  </b>
+                </td>
+              </tr>
+
+              <!-- Update Modal -->
+              <div class="modal fade" id="updateModal<%= timetable.id %>" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel<%= timetable.id %>" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="updateModalLabel<%= timetable.id %>">Update Timetable</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Update form content here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <p>No timetables found.</p>
+    <% } %>
+
+    <!-- Download Button -->
+    <div class="text-center mt-4">
+      <a href="/download-timetable?program=<%= program_name %>&level=<%= program_level %>&venue=<%= venue_name %>&tutor=<%= tutor_name %>&department=<%= department_name %>" class="btn btn-primary">Download Timetables</a>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      // Initialize Select2 on all select elements with class 'select2'
+      $('.select2').select2();
+    });
+  </script>
+ 
+  <%- include('partials/footer') %>
+</body>
+</html>

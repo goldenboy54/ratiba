@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timetable Management System</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #343a40;
+      font-family: 'Arial', sans-serif;
+    }
+    .navbar {
+      background: linear-gradient(45deg, #007bff, #0056b3); /* Bootstrap blue gradient */
+    }
+    .navbar-nav .nav-item .btn {
+      margin-right: 8px;
+      border-radius: 25px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .navbar-nav .nav-item .btn:hover {
+      background-color: #0056b3;
+      color: #ffffff;
+    }
+    .navbar-nav .nav-item .btn:active {
+      background-color: #003d79;
+      color: #ffffff;
+    }
+    .container h1 {
+      color: #007bff;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+    .img-fluid {
+      border-radius: 5px;
+      box-shadow: 0 4px 8px #02fc94f3;
+      max-height: 40px; /* Adjusted size for better navbar fit */
+      width: auto;
+    }
+    .btn-dark {
+      background-color: #007bff; /* Blue buttons */
+      border-color: #007bff;
+      color: #ffffff;
+    }
+    .btn-dark:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .navbar-nav .nav-item img {
+      max-height: 40px; /* Adjusted size for better navbar fit */
+      margin-left: 10px;
+    }
+    .animated-graphic {
+      width: 100%;
+      max-width: 600px;
+      margin: 2rem auto;
+      animation: rotate 20s linear infinite;
+    }
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    footer {
+      background-color: #f8f9fa; /* Light gray background */
+      color: #343a40; /* Dark gray text */
+      padding: 1rem; /* Adjusted padding */
+      margin-top: 2rem;
+      text-align: center;
+    }
+    /* Table styles */
+    .table {
+      background-color: #ffffff; /* White background for tables */
+    }
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #f2f2f2; /* Gray background for odd rows */
+    }
+    .table th, .table td {
+      color: #343a40; /* Black text color */
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/searchtimetable">
+      <img src="/images/atc.jpg" alt="Tanzania" class="img-fluid" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a href="/timetables" class="btn btn-dark">Timetables</a>
+        </li>
+        <li class="nav-item">
+          <a href="/venues" class="btn btn-dark">Venues</a>
+        </li>
+        <li class="nav-item">
+          <a href="/searchtimetable" class="btn btn-dark">Search Timetables</a>
+        </li>
+        <li class="nav-item">
+          <a href="/programs" class="btn btn-dark">Programs</a>
+        </li>
+        <li class="nav-item">
+          <a href="/subjects" class="btn btn-dark">Subjects</a>
+        </li>
+        <li class="nav-item">
+          <a href="/users" class="btn btn-dark">Users</a>
+        </li>
+        <li class="nav-item">
+          <a href="/registered_subjects" class="btn btn-dark">registered_subjects</a>
+        </li>
+        <li class="nav-item">
+          <a href="/departments" class="btn btn-dark">departments</a>
+        </li>
+  
+        <li class="nav-item">
+          <a href="/logout" class="btn btn-dark">Logout</a>
+        </li>
+        <li class="nav-item">
+          <div class="animated-graphic">🕑</div> 
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <!-- Page content goes here -->
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+############################## improvement one#############################################
+1. Check box to assign several programs.
+2. Hod must see only subject of his or her department .
+3. Semester entry on subject assigninent.
+4. To select semester to which to  generate timetable for.      
+5. Search filter on subjects ejs views
+6.table department must be added
+7. Subject must be assigned according to their needs i.e theory to lecture hall and practical to labl venues 
+############################## improvement two #############################################
+8. Mininum periods for every tutor for any given venue should be two periods(90 minutes)
+9. in the  venue module there should be a menu to generate report of empty venjes at any given time
+10. form to  manually assign  a free venue to a tutor (no need of rerun of the algoritm for minor changes)
+11.filter timetable by level is not working troubleshoot it.
+############################ CORRECTED improvement ###############################
+6.table department must be added
+7. Subject must be assigned according to their needs i.e theory to lecture hall and practical to labl venues 
